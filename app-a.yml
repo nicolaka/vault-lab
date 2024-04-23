@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-a
+  labels:
+    app: app-a
+spec:
+  selector:
+    matchLabels:
+      app: app-a
+  replicas: 1
+  template:
+    metadata:
+      annotations: 
+        vault.operater : "true"
+      labels:
+        app: app-a
+    spec:
+      containers:
+        - name: app-a
+          image: jweissig/app:0.0.1
+          volumeMounts:
+          - name: vault-kv-app
+            mountPath: "/etc/vault-kv-app"
+            readOnly: true
+          env: 
+          - name: SECRET_USERNAME 
+            valueFrom: 
+              secretKeyRef: 
+                name: vault-kv-app
+                key: username 
+          - name: SECRET_PASSWORD 
+            valueFrom: 
+              secretKeyRef: 
+                name: vault-kv-app
+                key: password 
+      volumes:
+       - name: vault-kv-app
+         secret:
+            secretName: vault-kv-app
+            optional: false
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: vault-kv-app
+spec:
+  type: kv-v2
+  namespace: blue
+  mount: kv
+  path: app/config
+  # dest k8s secret
+  destination:
+    name: vault-kv-app
+    create: true
+  # static secret refresh interval
+  refreshAfter: 5s
+  # Name of the CRD to authenticate to Vault
+  vaultAuthRef: default
