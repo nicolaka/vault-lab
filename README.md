@@ -385,7 +385,7 @@ You can see that there are two clients now. The newly added k8s client after `ap
     "time": "2024-02-06T22:54:08.533531546Z",
     "type": "response",
     "auth": {
-        "client_token": "hvs.CAESIDURx6dp0Kle4uj3mjY9oo0tEycPBTqBRUwo7RfHq8ITGh4KHGh2cy5ib2U1VGhhc3BsTXV3bVNTbWx1MVFsWTQ",
+        "client_token": "xxxxxxxxx",
         "accessor": "cZzpCmk5kteeJG3gMxOwUXPt",
         "display_name": "kubernetes-blue-default",
         "policies": [
@@ -430,7 +430,7 @@ You can see that there are two clients now. The newly added k8s client after `ap
         "mount_accessor": "kv_0046b77f",
         "mount_running_version": "v0.16.1+builtin",
         "mount_class": "secret",
-        "client_token": "hvs.boe5ThasplMuwmSSmlu1QlY4",
+        "client_token": "xxxxxxx",
         "client_token_accessor": "cZzpCmk5kteeJG3gMxOwUXPt",
         "namespace": {
             "id": "MDDzG",
@@ -531,7 +531,7 @@ Similarily, we have a detailed audit log to show us the auth request details:
     "time": "2024-02-06T22:51:52.620840761Z",
     "type": "response",
     "auth": {
-        "client_token": "hvs.CAESIFDxMf_RjFOzrMSFQ4JzxRd_4m3MRXC98iS9eJN9m7R8Gh4KHGh2cy5YZDE0bldBb09zTjkwNmsyRUNkZEpDdFk",
+        "client_token": "xxxxxxxx",
         "accessor": "pUXUzKeYxrXDjWY3J0x4qcR0",
         "display_name": "kubernetes-red-default",
         "policies": [
@@ -576,7 +576,7 @@ Similarily, we have a detailed audit log to show us the auth request details:
         "mount_accessor": "kv_3e9bf025",
         "mount_running_version": "v0.16.1+builtin",
         "mount_class": "secret",
-        "client_token": "hvs.Xd14nWAoOsN906k2ECddJCtY",
+        "client_token": "xxxxxx",
         "client_token_accessor": "pUXUzKeYxrXDjWY3J0x4qcR0",
         "namespace": {
             "id": "5Ejcb",
