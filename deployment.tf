@@ -107,6 +107,7 @@ resource "time_sleep" "wait" {
 # First before you can run a Terraform Plan or Apply. Therefore it's required for you to comment these two resources out, run Terraform apply, then uncomment
 # Them and run Terraform one more time! 
 # VSO Kuberneters Connections
+
 resource "kubernetes_manifest" "blue-vault-connection-default" {
   depends_on = [time_sleep.wait]
   manifest = {

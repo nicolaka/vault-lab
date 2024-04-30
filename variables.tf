@@ -28,7 +28,7 @@ variable "vault_helm_version" {
 variable "vso_helm_version" {
   type = string
   description = "Vault Secret Operator Helm Release Version"
-  default = "0.5.0"
+  default = "0.6.0"
 }
 
 
