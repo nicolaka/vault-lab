@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: green
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-g
+  labels:
+    app: app-g
+spec:
+  selector:
+    matchLabels:
+      app: app-g
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"
+        vault.hashicorp.com/auth-path: "auth/jwt"
+        vault.hashicorp.com/auth-config-path: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        vault.hashicorp.com/auth-config-role: "green"
+        vault.hashicorp.com/auth-type: "jwt"
+        vault.hashicorp.com/log-level: "debug"
+        vault.hashicorp.com/tls-skip-verify: "true"
+        vault.hashicorp.com/agent-inject-secret-app-config.txt: "blue/kv/data/app/config"
+        vault.hashicorp.com/agent-inject-template-app-config.txt: |
+        #  {{- with secret "blue/kv/data/app/config" -}}
+        #  postgresql://{{ .Data.data.username }}:{{ .Data.data.password }}@postgres:5432/wizard
+        #  {{- end -}}
+      labels:
+        app: app-g
+    spec:
+      serviceAccountName: green
+      containers:
+        - name: app-g
+          image: jweissig/app:0.0.1

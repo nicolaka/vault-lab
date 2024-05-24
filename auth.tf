@@ -131,6 +131,35 @@ resource "vault_kubernetes_auth_backend_config" "kubernetes" {
   disable_iss_validation = "true"
 }
 
+# Creating kube openid cert as a data source
+data "local_file" "kube_jwt_pubkey" {
+  filename = "kube.pem"
+}
+
+# Creating the JWT Auth Backend
+resource "vault_jwt_auth_backend" "jwt" {
+    description             = "Kubernetes JWT Auth Backend"
+    path                    = "jwt"
+    jwt_validation_pubkeys  = ["${data.local_file.kube_jwt_pubkey.content}"]
+    bound_issuer            = "https://kubernetes.default.svc.cluster.local"
+}
+
+# Creating a Role for the Green Namespace
+resource "vault_jwt_auth_backend_role" "green" {
+  backend         = vault_jwt_auth_backend.jwt.path
+  role_name       = "green"
+  token_policies  = ["default"]
+
+  bound_audiences = ["https://kubernetes.default.svc.cluster.local"]
+  #bound_claims = {
+  #  color = "red,green,blue"
+  #}
+  user_claim      = "/kubernetes.io/namespace"
+  user_claim_json_pointer = "true"
+  role_type       = "jwt"
+}
+
+
 # Creating a K8s Auth Role for App A which will be used by VSO Deployment
 resource "vault_kubernetes_auth_backend_role" "app_a" {
   namespace                        = var.vault_namespace
@@ -157,3 +186,4 @@ resource "vault_kubernetes_auth_backend_role" "app_b" {
   token_policies                   = ["red"]
   audience                         = ""
 }
+

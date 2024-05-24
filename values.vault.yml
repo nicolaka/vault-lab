@@ -76,7 +76,7 @@ injector:
   # required.
   agentImage:
     repository: "hashicorp/vault"
-    tag: "1.15.2"
+    tag: "latest"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -1220,7 +1220,7 @@ csi:
     timeoutSeconds: 3
 
   # Enables debug logging.
-  debug: false
+  debug: true
 
   # Pass arbitrary additional arguments to vault-csi-provider.
   # See https://developer.hashicorp.com/vault/docs/platform/k8s/csi/configurations#command-line-arguments

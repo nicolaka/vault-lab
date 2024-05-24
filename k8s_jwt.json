@@ -1,0 +1,22 @@
+{
+  "aud": [
+    "https://kubernetes.default.svc.cluster.local"
+  ],
+  "exp": 1747761185,
+  "iat": 1716225185,
+  "iss": "https://kubernetes.default.svc.cluster.local",
+  "kubernetes.io": {
+    "namespace": "blue",
+    "pod": {
+      "name": "tmp-shell",
+      "uid": "6dc40079-4377-407d-9f91-19c18429e828"
+    },
+    "serviceaccount": {
+      "name": "default",
+      "uid": "2819bf1d-a09b-4fa2-aaf8-1f40831b0b07"
+    },
+    "warnafter": 1716228792
+  },
+  "nbf": 1716225185,
+  "sub": "system:serviceaccount:blue:default"
+}

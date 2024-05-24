@@ -31,7 +31,6 @@ variable "vso_helm_version" {
   default = "0.6.0"
 }
 
-
 variable vault_public_address {
   type        = string
   default     = "http://vault.vault.svc.cluster.local:8200"

@@ -143,3 +143,23 @@ resource "vault_identity_entity_alias" "app_b_k8s_alias" {
 }
 
 
+# Creating Kubernetes Namespace Entity
+resource "vault_identity_entity" "green" {
+  name      = "green"
+  policies  = ["green"]
+  metadata  = {
+    kubernetes_namespace = "green"
+  }
+}
+
+
+resource "vault_identity_entity_alias" "green_k8s_alias" {
+  name            = kubernetes_namespace.green.id
+  mount_accessor  = vault_jwt_auth_backend.jwt.accessor
+  canonical_id    = vault_identity_entity.green.id
+  custom_metadata = {
+    kubernetes_namespace = "green"
+    auth = "jwt"
+  }
+}
+

@@ -17,3 +17,13 @@ path "red/kv/data/app/config" {
 }
 EOT
 }
+
+resource "vault_policy" "green" {
+  namespace = var.vault_namespace
+  name = "green"
+  policy = <<EOT
+path "blue/kv/data/app/config" {
+  capabilities = ["read"]
+}
+EOT
+}

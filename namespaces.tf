@@ -43,6 +43,20 @@ resource "kubernetes_namespace" "red" {
 }
 
 
+# Creating a third K8s Multiplexing Namespace green
+resource "kubernetes_namespace" "green" {
+  metadata {
+    annotations = {
+      name = "green"
+    }
+    labels = {
+      team = "green"
+    }
+    name = "green"
+  }
+}
+
+
 # Creating two namespaces under the root namespace
 resource "vault_namespace" "red" {
   depends_on = [ helm_release.vault ]
