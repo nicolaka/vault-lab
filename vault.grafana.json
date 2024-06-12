@@ -1383,7 +1383,7 @@
             "params": [
               {
                 "key": "end_time",
-                "value": "1718211965"
+                "value": "${__to:date:seconds}"
               },
               {
                 "key": "format",
@@ -1844,7 +1844,7 @@
             "params": [
               {
                 "key": "end_time",
-                "value": "${__from:date:seconds}"
+                "value": "${__to:date:seconds}"
               },
               {
                 "key": "format",
