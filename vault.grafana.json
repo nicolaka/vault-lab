@@ -86,6 +86,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -97,7 +98,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -196,7 +197,7 @@
           }
         ]
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -285,6 +286,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -296,7 +298,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -365,6 +367,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -376,7 +379,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -457,6 +460,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -468,7 +472,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -530,6 +534,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -541,7 +546,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -574,6 +579,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -717,8 +723,8 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 14,
         "x": 0,
         "y": 16
       },
@@ -739,7 +745,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "columns": [
@@ -815,6 +821,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -877,9 +884,9 @@
         ]
       },
       "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 12,
+        "h": 9,
+        "w": 10,
+        "x": 14,
         "y": 16
       },
       "id": 159,
@@ -928,185 +935,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
-          },
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "set"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#629e51",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 3,
-        "x": 18,
-        "y": 16
-      },
-      "id": 153,
-      "interval": "1m",
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "vault_identity_entity_active_partial_month",
-          "hide": false,
-          "instant": false,
-          "interval": "30s",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Active Clients Count (Current Month)",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "set"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "#629e51",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 3,
-        "x": 21,
-        "y": 16
-      },
-      "id": 136,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "vault_identity_num_entities",
-          "format": "time_series",
-          "interval": "30s",
-          "intervalFactor": 1,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Entity Count",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "fixedColor": "purple",
             "mode": "fixed"
           },
@@ -1117,6 +945,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "hue",
@@ -1183,9 +1012,9 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 12,
+        "w": 14,
         "x": 0,
-        "y": 24
+        "y": 25
       },
       "id": 161,
       "options": {
@@ -1223,6 +1052,98 @@
     },
     {
       "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "set"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#629e51",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 10,
+        "x": 14,
+        "y": 25
+      },
+      "id": 153,
+      "interval": "1m",
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "vault_identity_entity_active_partial_month",
+          "hide": false,
+          "instant": false,
+          "interval": "30s",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Active Clients Count (Current Month)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "default": false,
         "type": "yesoreyeram-infinity-datasource",
         "uid": "P8BCA6AF7BF6364B9"
       },
@@ -1235,11 +1156,13 @@
           "custom": {
             "align": "center",
             "cellOptions": {
+              "applyToRow": true,
               "mode": "basic",
-              "type": "color-background"
+              "type": "color-background",
+              "wrapText": true
             },
             "filterable": true,
-            "inspect": false
+            "inspect": true
           },
           "mappings": [],
           "thresholds": {
@@ -1304,62 +1227,150 @@
                 "value": 345
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 363
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 379
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 370
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 416
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 24
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 35
       },
-      "id": 158,
+      "id": 164,
       "interval": "10s",
       "options": {
-        "cellHeight": "sm",
+        "cellHeight": "md",
         "footer": {
-          "countRows": false,
-          "enablePagination": false,
+          "countRows": true,
+          "enablePagination": true,
           "fields": "",
           "reducer": [
-            "sum"
+            "count"
           ],
-          "show": false
+          "show": true
         },
         "frameIndex": 1,
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "entity_alias_metadata.service_account_uid"
+          }
+        ]
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
-          "columns": [
-            {
-              "selector": "client_id",
-              "text": "Client ID",
-              "type": "string"
-            },
-            {
-              "selector": "namespace_id",
-              "text": "Namespace ID",
-              "type": "string"
-            },
-            {
-              "selector": "timestamp",
-              "text": "Timestamp",
-              "type": "timestamp_epoch_s"
-            },
-            {
-              "selector": "non_entity",
-              "text": "Is Non-Entity",
-              "type": "boolean"
-            },
-            {
-              "selector": "mount_accessor",
-              "text": "Mount Accessor",
-              "type": "string"
-            }
-          ],
+          "columns": [],
+          "computed_columns": [],
           "csv_options": {
             "skip_empty_lines": false
           },
@@ -1368,9 +1379,9 @@
             "uid": "P8BCA6AF7BF6364B9"
           },
           "filters": [],
-          "format": "dataframe",
+          "format": "table",
           "global_query_id": "",
-          "parser": "simple",
+          "parser": "backend",
           "refId": "A",
           "root_selector": "",
           "source": "url",
@@ -1393,7 +1404,53 @@
           }
         }
       ],
-      "title": "Active Client Details",
+      "title": "Vault Clients Explorer",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "client_id": 1,
+              "client_type": 4,
+              "entity_alias_custom_metadata.app": 10,
+              "entity_alias_custom_metadata.auth": 11,
+              "entity_alias_custom_metadata.email": 12,
+              "entity_alias_custom_metadata.username": 13,
+              "entity_alias_metadata.service_account_name": 14,
+              "entity_alias_metadata.service_account_namespace": 15,
+              "entity_alias_metadata.service_account_secret_name": 16,
+              "entity_alias_metadata.service_account_uid": 17,
+              "entity_alias_name": 3,
+              "entity_metadata.app": 18,
+              "entity_metadata.team": 19,
+              "entity_metadata.user": 20,
+              "entity_name": 2,
+              "local_entity_alias": 21,
+              "mount_accessor": 7,
+              "mount_path": 8,
+              "mount_type": 9,
+              "namespace_id": 0,
+              "namespace_path": 6,
+              "policies.0": 22,
+              "timestamp": 5
+            },
+            "renameByName": {
+              "client_id": "Client ID",
+              "client_type": "Client Type",
+              "entity_alias_name": "Entity Alias Name",
+              "entity_name": "Entity Name",
+              "mount_accessor": "Mount Accessor",
+              "mount_path": "Mount Path",
+              "mount_type": "Mount Type",
+              "namespace_id": "Namespace ID",
+              "namespace_path": "Namespace Path",
+              "timestamp": "Timestame"
+            }
+          }
+        }
+      ],
       "type": "table"
     },
     {
@@ -1413,6 +1470,7 @@
             "axisLabel": "Requests per second",
             "axisPlacement": "left",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 16,
             "gradientMode": "hue",
@@ -1462,10 +1520,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 12,
+        "h": 14,
+        "w": 14,
         "x": 0,
-        "y": 34
+        "y": 49
       },
       "id": 61,
       "options": {
@@ -1516,7 +1574,9 @@
           "color": {
             "mode": "thresholds"
           },
+          "links": [],
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1532,20 +1592,37 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "set"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#629e51",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 34
+        "h": 12,
+        "w": 10,
+        "x": 14,
+        "y": 49
       },
-      "id": 120,
+      "id": 136,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1557,28 +1634,24 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "sum by(auth_method) (vault_identity_entity_alias_count)",
+          "editorMode": "code",
+          "expr": "vault_identity_num_entities",
           "format": "time_series",
-          "fullMetaSearch": false,
-          "includeNullMetadata": true,
-          "interval": "",
+          "interval": "30s",
           "intervalFactor": 1,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "useBackend": false
+          "refId": "A"
         }
       ],
-      "title": "Entity Alias Count",
+      "title": "Entity Count",
       "type": "stat"
     },
     {
@@ -1605,10 +1678,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 19,
-        "w": 12,
-        "x": 12,
-        "y": 44
+        "h": 17,
+        "w": 10,
+        "x": 14,
+        "y": 61
       },
       "id": 49,
       "maxDataPoints": 1000,
@@ -1661,36 +1734,29 @@
     },
     {
       "datasource": {
+        "default": false,
         "type": "yesoreyeram-infinity-datasource",
         "uid": "P8BCA6AF7BF6364B9"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "transparent",
+            "fixedColor": "semi-dark-red",
             "mode": "fixed"
           },
           "custom": {
-            "align": "auto",
+            "align": "left",
             "cellOptions": {
+              "applyToRow": false,
               "mode": "basic",
-              "type": "color-background"
+              "type": "color-background",
+              "wrapText": true
             },
             "filterable": true,
             "inspect": true
           },
-          "fieldMinMax": false,
-          "mappings": [
-            {
-              "options": {
-                "name": {
-                  "index": 0,
-                  "text": "Name"
-                }
-              },
-              "type": "value"
-            }
-          ],
+          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1705,121 +1771,40 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "canonical_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 328
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "13508048-8d64-067d-855f-58d06e0d2f59"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 325
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "custom_metadata"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 408
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Client ID"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 344
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
-        "h": 17,
-        "w": 12,
+        "h": 15,
+        "w": 14,
         "x": 0,
-        "y": 46
+        "y": 63
       },
-      "id": 163,
+      "id": 158,
       "interval": "10s",
       "options": {
-        "cellHeight": "md",
+        "cellHeight": "sm",
         "footer": {
-          "countRows": false,
+          "countRows": true,
           "enablePagination": true,
           "fields": "",
           "reducer": [
-            "sum"
+            "count"
           ],
           "show": false
         },
         "frameIndex": 1,
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Entity Name"
+          }
+        ]
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
-          "columns": [
-            {
-              "selector": "canonical_id",
-              "text": "Client ID",
-              "type": "string"
-            },
-            {
-              "selector": "custom_metadata",
-              "text": "Custom Metadata",
-              "type": "string"
-            },
-            {
-              "selector": "local",
-              "text": "Is Local",
-              "type": "boolean"
-            },
-            {
-              "selector": "mount_accessor",
-              "text": "Mount Accessor",
-              "type": "string"
-            },
-            {
-              "selector": "mount_path",
-              "text": "Mount Path",
-              "type": "string"
-            },
-            {
-              "selector": "mount_type",
-              "text": "Mount Type",
-              "type": "string"
-            },
-            {
-              "selector": "name",
-              "text": "Name",
-              "type": "string"
-            }
-          ],
-          "computed_columns": [],
+          "columns": [],
           "csv_options": {
             "skip_empty_lines": false
           },
@@ -1828,18 +1813,27 @@
             "uid": "P8BCA6AF7BF6364B9"
           },
           "filters": [],
-          "format": "table",
+          "format": "dataframe",
           "global_query_id": "",
-          "groq": "*",
-          "parser": "backend",
+          "json_options": {
+            "columnar": false,
+            "root_is_not_array": false
+          },
+          "parser": "simple",
           "refId": "A",
-          "root_selector": "data.key_info[*].*",
+          "root_selector": "$.data.key_info[*].*",
           "source": "url",
           "type": "json",
-          "uql": "parse-json",
-          "url": "http://vault.vault.svc.cluster.local:8200/v1/identity/alias/id?list=true",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "http://vault.vault.svc.cluster.local:8200/v1/identity/entity/id",
           "url_options": {
             "data": "",
+            "headers": [
+              {
+                "key": "header-key",
+                "value": "header-value"
+              }
+            ],
             "method": "GET",
             "params": [
               {
@@ -1847,54 +1841,82 @@
                 "value": "${__to:date:seconds}"
               },
               {
-                "key": "format",
-                "value": "csv"
+                "key": "list",
+                "value": "true"
               }
             ]
           }
         }
       ],
-      "title": "Entity Aliase Summary",
+      "title": "Entities Explorer",
       "transformations": [
+        {
+          "id": "groupToNestedTable",
+          "options": {
+            "fields": {
+              "aliases": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "id": {
+                "aggregations": []
+              },
+              "name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "value": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            },
+            "showSubframeHeaders": true
+          }
+        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {},
             "includeByName": {},
             "indexByName": {
-              "Client ID": 0,
-              "Custom Metadata": 5,
-              "Is Local": 6,
-              "Mount Accessor": 4,
-              "Mount Path": 2,
-              "Mount Type": 3,
-              "Name": 1
+              "Nested frames": 2,
+              "id": 1,
+              "name": 0
             },
-            "renameByName": {}
+            "renameByName": {
+              "Nested frames": "",
+              "id": "Entity ID",
+              "name": "Entity Name"
+            }
           }
         }
       ],
-      "transparent": true,
       "type": "table"
     },
     {
       "datasource": {
+        "default": false,
         "type": "yesoreyeram-infinity-datasource",
         "uid": "P8BCA6AF7BF6364B9"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "fixedColor": "yellow",
+            "mode": "fixed"
           },
           "custom": {
-            "align": "auto",
+            "align": "left",
             "cellOptions": {
-              "type": "auto"
+              "applyToRow": false,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
             },
-            "inspect": false
+            "filterable": true,
+            "inspect": true
           },
-          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1913,121 +1935,34 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
-        "w": 4,
+        "h": 16,
+        "w": 14,
         "x": 0,
-        "y": 63
+        "y": 78
       },
-      "id": 160,
+      "id": 165,
+      "interval": "10s",
       "options": {
         "cellHeight": "sm",
         "footer": {
-          "countRows": false,
+          "countRows": true,
+          "enablePagination": true,
           "fields": "",
           "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "frameIndex": 0,
-        "showHeader": true
-      },
-      "pluginVersion": "11.0.0",
-      "targets": [
-        {
-          "columns": [],
-          "csv_options": {
-            "skip_empty_lines": false
-          },
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "dataframe",
-          "global_query_id": "",
-          "parser": "backend",
-          "refId": "A",
-          "root_selector": "data.keys",
-          "source": "url",
-          "type": "json",
-          "uql": "parse-csv --delimiter \"\t\"",
-          "url": "http://vault.vault.svc.cluster.local:8200/v1/identity/entity/name?list=true",
-          "url_options": {
-            "data": "",
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "1712676886"
-              },
-              {
-                "key": "format",
-                "value": "csv"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Entity List",
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 8,
-        "x": 4,
-        "y": 63
-      },
-      "id": 162,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
+            "count"
           ],
           "show": false
         },
         "frameIndex": 1,
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Entity Name"
+          }
+        ]
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "columns": [],
@@ -2041,31 +1976,159 @@
           "filters": [],
           "format": "dataframe",
           "global_query_id": "",
-          "parser": "backend",
+          "json_options": {
+            "columnar": false,
+            "root_is_not_array": false
+          },
+          "parser": "simple",
           "refId": "A",
-          "root_selector": "data.keys",
+          "root_selector": "$.data.key_info.*",
           "source": "url",
           "type": "json",
           "uql": "parse-csv --delimiter \"\t\"",
-          "url": "http://vault.vault.svc.cluster.local:8200/v1/identity/entity/id?list=true",
+          "url": "http://vault.vault.svc.cluster.local:8200/v1/identity/entity-alias/id",
           "url_options": {
             "data": "",
+            "headers": [
+              {
+                "key": "header-key",
+                "value": "header-value"
+              }
+            ],
             "method": "GET",
             "params": [
               {
                 "key": "end_time",
-                "value": "1712676886"
+                "value": "${__to:date:seconds}"
               },
               {
-                "key": "format",
-                "value": "csv"
+                "key": "list",
+                "value": "true"
               }
             ]
           }
         }
       ],
-      "title": "Entity List by ID",
+      "title": "Entities Alias Explorer",
+      "transformations": [
+        {
+          "id": "groupToNestedTable",
+          "options": {
+            "fields": {
+              "aliases": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "id": {
+                "aggregations": []
+              },
+              "name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "value": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            },
+            "showSubframeHeaders": true
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "Nested frames": 2,
+              "id": 1,
+              "name": 0
+            },
+            "renameByName": {
+              "Nested frames": "",
+              "id": "Entity ID",
+              "name": "Entity Alias Name"
+            }
+          }
+        }
+      ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 10,
+        "x": 14,
+        "y": 78
+      },
+      "id": 120,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "disableTextWrap": false,
+          "editorMode": "builder",
+          "expr": "sum by(auth_method) (vault_identity_entity_alias_count)",
+          "format": "time_series",
+          "fullMetaSearch": false,
+          "includeNullMetadata": true,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A",
+          "useBackend": false
+        }
+      ],
+      "title": "Entity Alias Count",
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -2073,7 +2136,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 74
+        "y": 94
       },
       "id": 155,
       "panels": [],
@@ -2129,7 +2192,7 @@
         "h": 5,
         "w": 23,
         "x": 0,
-        "y": 75
+        "y": 95
       },
       "id": 156,
       "options": {
@@ -2137,6 +2200,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2148,7 +2212,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2184,7 +2248,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 80
+        "y": 100
       },
       "id": 16,
       "panels": [],
@@ -2225,7 +2289,7 @@
         "h": 4,
         "w": 3,
         "x": 0,
-        "y": 81
+        "y": 101
       },
       "id": 53,
       "options": {
@@ -2233,6 +2297,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2244,7 +2309,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2295,7 +2360,7 @@
         "h": 8,
         "w": 21,
         "x": 3,
-        "y": 81
+        "y": 101
       },
       "id": 78,
       "options": {
@@ -2303,6 +2368,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -2314,7 +2380,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2370,7 +2436,7 @@
         "h": 4,
         "w": 3,
         "x": 0,
-        "y": 85
+        "y": 105
       },
       "id": 8,
       "maxDataPoints": 100,
@@ -2384,6 +2450,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "horizontal",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -2395,7 +2462,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2465,7 +2532,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 89
+        "y": 109
       },
       "id": 104,
       "options": {
@@ -2524,6 +2591,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "bars",
             "fillOpacity": 100,
             "gradientMode": "none",
@@ -2572,7 +2640,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 98
+        "y": 118
       },
       "id": 102,
       "options": {
@@ -2661,7 +2729,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 98
+        "y": 118
       },
       "id": 100,
       "options": {
@@ -2719,6 +2787,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -2765,7 +2834,7 @@
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 106
+        "y": 126
       },
       "id": 14,
       "options": {
@@ -2808,7 +2877,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 112
+        "y": 132
       },
       "id": 20,
       "panels": [],
@@ -2853,7 +2922,7 @@
         "h": 5,
         "w": 3,
         "x": 0,
-        "y": 113
+        "y": 133
       },
       "id": 97,
       "maxDataPoints": 100,
@@ -2862,6 +2931,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "max"
@@ -2873,7 +2943,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2907,6 +2977,7 @@
             "axisLabel": "Requests per second",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -2957,7 +3028,7 @@
         "h": 10,
         "w": 21,
         "x": 3,
-        "y": 113
+        "y": 133
       },
       "id": 4,
       "options": {
@@ -3053,7 +3124,7 @@
         "h": 5,
         "w": 3,
         "x": 0,
-        "y": 118
+        "y": 138
       },
       "id": 98,
       "maxDataPoints": 100,
@@ -3062,6 +3133,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "max"
@@ -3073,7 +3145,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -3186,7 +3258,7 @@
       {
         "current": {
           "isNone": true,
-          "selected": false,
+          "selected": true,
           "text": "None",
           "value": ""
         },
@@ -3210,10 +3282,9 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
-  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {
     "refresh_intervals": [
       "10s",
@@ -3241,6 +3312,6 @@
   "timezone": "",
   "title": "Hashicorp Vault",
   "uid": "vaults",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }

@@ -30,6 +30,10 @@ resource "helm_release" "vault" {
   chart      = "vault"
   namespace  = kubernetes_namespace.vault.id
   version    = var.vault_helm_version
+  set {
+    name  = "server.image.tag"
+    value = var.vault_version
+  }
   values = [
     "${file("values.vault.yml")}"
   ]
