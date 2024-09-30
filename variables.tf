@@ -56,8 +56,12 @@ variable kubernetes_namespace {
   description = "Kubernetes Namespace" 
 }
 
-
-
+# Promethues Stack Helm Version
+variable "prom_version" {
+  type = string
+  description = "Prom Version"
+  default = "61.3.0"
+}
 
 
 
