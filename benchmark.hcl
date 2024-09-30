@@ -6,6 +6,7 @@ duration = "60s"
 random_mounts = true
 #cleanup = true
 
+/*
 test "approle_auth" "approle_logins" {
   weight = 25
   config {
@@ -18,6 +19,7 @@ test "approle_auth" "approle_logins" {
   }
 }
 
+
 test "userpass_auth" "userpass_test1" {
     weight = 25
     config {
@@ -25,6 +27,7 @@ test "userpass_auth" "userpass_test1" {
         password = "P@ssword1"
     }
 }
+*/
 
 test "kvv2_write" "static_secret_writes" {
   weight = 25
