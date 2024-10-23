@@ -378,7 +378,7 @@ server:
   image:
     repository: "hashicorp/vault-enterprise"
     #tag: "latest"
-    tag: "1.18.0-rc1-ent"
+    tag: "1.18-ent"
     # Overrides the default Image Pull Policy
     pullPolicy: IfNotPresent
 

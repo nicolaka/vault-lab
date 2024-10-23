@@ -141,5 +141,3 @@ resource "vault_identity_entity_alias" "app_b_k8s_alias" {
     auth = "k8s"
   }
 }
-
-
