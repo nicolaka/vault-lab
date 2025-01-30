@@ -21,14 +21,14 @@ variable "vault_license" {
 variable "vault_helm_version" {
   type = string
   description = "Vault's Helm Release Version"
-  default = "0.28.1"
+  default = "0.29.1"
 }
 
 # Vault Secret Operator Version
 variable "vso_helm_version" {
   type = string
   description = "Vault Secret Operator Helm Release Version"
-  default = "0.8.1"
+  default = "0.9.1"
 }
 
 
@@ -60,7 +60,7 @@ variable kubernetes_namespace {
 variable "prom_version" {
   type = string
   description = "Prom Version"
-  default = "61.3.0"
+  default = "68.4.0"
 }
 
 
