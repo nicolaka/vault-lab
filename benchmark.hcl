@@ -30,7 +30,7 @@ test "userpass_auth" "userpass_test1" {
 */
 
 test "kvv2_write" "static_secret_writes" {
-  weight = 25
+  weight = 50
   config {
     numkvs = 100
     kvsize = 100
@@ -38,7 +38,7 @@ test "kvv2_write" "static_secret_writes" {
 }
 
 test "kvv2_read" "static_secret_reads" {
-  weight = 25
+  weight = 50
   config {
     numkvs = 100
   }
