@@ -613,22 +613,28 @@ Similarily, we have a detailed audit log to show us the auth request details:
 
 ### Vault API Identity + Clients Reference
 ```
-# Returns details on the total number of entities 
-$ http $VAULT_ADDR/v1/sys/internal/counters/entities "X-Vault-Token: $VAULT_TOKEN"
 
- # Returns details on the total number of tokens
-$ http $VAULT_ADDR/v1/sys/internal/counters/tokens "X-Vault-Token: $VAULT_TOKEN"
 
- 
-# Returns total client count breakdown by auth method by namespace and new clients by month
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity "X-Vault-Token: $VAULT_TOKEN" 
+# ENSURE THAT THE START AND END TIMES REPRESENT THE CUSTOMERS' 12 MONTH BILLING CYCLE 
+# MAKE SURE THAT THE END DATE DOES NOT FALL IN THE CURRENT MONTH 
 
-# Returns a list of unique clients that had activity within the provided start/end time 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity/export "X-Vault-Token: $VAULT_TOKEN" 
+$ export VAULT_ADDR=<Vault Address>
+$ export VAULT_TOKEN=<Vault Token>
+$ export START_TIME="2025-01-01T00:00:00Z"
+$ export END_TIME="2025-12-31T11:59:59Z"
 
-  
-# Returns client activity for the current month 
+
+# Returns total client count breakdown by auth method, namespace and new clients by month (HTTpie or Curl) 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN" 
+$ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
+
+# Returns a list of unique clients that had activity within the provided start/end time (HTTpie or Curl) 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/export start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN" 
+$ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity/export?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
+
+# Returns ALL (non-duplicated) client activity for the current month (HTTpie or Curl) 
 $ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN" 
+$ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity/monthly?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
 
 ```
 
