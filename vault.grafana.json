@@ -232,7 +232,7 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 13,
         "w": 24,
         "x": 0,
         "y": 13
@@ -318,7 +318,7 @@
           }
         }
       ],
-      "title": "Total Clients Breakdown by Month",
+      "title": "Clients Breakdown by Month",
       "transformations": [
         {
           "id": "extractFields",
@@ -348,25 +348,13 @@
             "mode": "palette-classic"
           },
           "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "center",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
             },
-            "lineWidth": 1,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "filterable": true,
+            "inspect": false
           },
           "fieldMinMax": false,
           "mappings": [],
@@ -390,86 +378,49 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "counts"
-            },
-            "properties": []
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Count"
-            },
-            "properties": []
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Time"
             },
             "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              }
+            ]
           }
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 9,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 26
       },
       "id": 172,
       "interval": "1m",
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
+        "cellHeight": "md",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 0
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "11.4.0",
       "targets": [
         {
-          "columns": [
-            {
-              "selector": "counts",
-              "text": "Count",
-              "type": "string"
-            },
-            {
-              "selector": "namespaces",
-              "text": "Namespaces",
-              "type": "string"
-            },
-            {
-              "selector": "new_clients",
-              "text": "New Clients",
-              "type": "string"
-            },
-            {
-              "selector": "timestamp",
-              "text": "Time",
-              "timestampFormat": "2006-01",
-              "type": "timestamp"
-            },
-            {
-              "selector": "",
-              "text": "",
-              "type": "string"
-            }
-          ],
+          "columns": [],
           "computed_columns": [],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
@@ -502,23 +453,39 @@
           }
         }
       ],
-      "title": "Total Clients Breakdown by Month",
+      "title": "Total Clients Breakdown by Namespace",
       "transformations": [
         {
           "id": "extractFields",
           "options": {
-            "format": "json",
+            "format": "auto",
             "jsonPaths": [
               {
                 "path": ""
               }
             ],
-            "keepTime": true,
-            "replace": true
+            "keepTime": false,
+            "replace": false,
+            "source": "counts"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "counts": true,
+              "mounts": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {
+              "namespace_id": "",
+              "namespace_path": ""
+            }
           }
         }
       ],
-      "type": "barchart"
+      "type": "table"
     },
     {
       "datasource": {
@@ -607,7 +574,7 @@
         "h": 10,
         "w": 11,
         "x": 0,
-        "y": 37
+        "y": 35
       },
       "id": 161,
       "options": {
@@ -693,7 +660,7 @@
         "h": 10,
         "w": 4,
         "x": 11,
-        "y": 37
+        "y": 35
       },
       "id": 136,
       "options": {
@@ -783,7 +750,7 @@
         "h": 10,
         "w": 4,
         "x": 15,
-        "y": 37
+        "y": 35
       },
       "id": 166,
       "interval": "1m",
@@ -907,7 +874,7 @@
         "h": 10,
         "w": 5,
         "x": 19,
-        "y": 37
+        "y": 35
       },
       "id": 159,
       "options": {
@@ -1159,7 +1126,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 45
       },
       "id": 164,
       "interval": "10s",
@@ -1270,6 +1237,345 @@
     },
     {
       "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "applyToRow": true,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lease_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 156
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "creation_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 335
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 127
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_update_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 345
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 363
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 379
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 370
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 416
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Alias Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 59
+      },
+      "id": 173,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": true
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "entity_alias_metadata.service_account_uid"
+          }
+        ]
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "",
+              "text": "",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "hide": false,
+          "parser": "simple",
+          "refId": "B",
+          "root_selector": "",
+          "source": "url",
+          "type": "json",
+          "url": "/v1/identity/entity-alias/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "list",
+                "value": "true"
+              },
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              }
+            ]
+          }
+        },
+        {
+          "columns": [],
+          "computed_columns": [],
+          "csv_options": {
+            "skip_empty_lines": false
+          },
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "/v1/sys/internal/counters/activity/export",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              },
+              {
+                "key": "format",
+                "value": "csv"
+              },
+              {
+                "key": "start_time",
+                "value": "$start_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Vault Clients Explorer v2",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "A client_id",
+            "mode": "outer"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "P8BCA6AF7BF6364B9"
       },
@@ -1302,7 +1608,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 73
       },
       "id": 168,
       "interval": "1m",
@@ -1452,7 +1758,19 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 90
+                "value": 424
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "canonical_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 412
               }
             ]
           }
@@ -1462,7 +1780,7 @@
         "h": 13,
         "w": 24,
         "x": 0,
-        "y": 73
+        "y": 85
       },
       "id": 165,
       "interval": "10s",
@@ -1572,7 +1890,7 @@
         "h": 15,
         "w": 14,
         "x": 0,
-        "y": 86
+        "y": 98
       },
       "id": 120,
       "options": {
@@ -1643,7 +1961,7 @@
         "h": 15,
         "w": 10,
         "x": 14,
-        "y": 86
+        "y": 98
       },
       "id": 49,
       "maxDataPoints": 1000,
@@ -1658,7 +1976,8 @@
           "placement": "right",
           "showLegend": true,
           "values": [
-            "value"
+            "value",
+            "percent"
           ]
         },
         "pieType": "pie",
@@ -1764,7 +2083,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 101
+        "y": 113
       },
       "id": 61,
       "options": {
@@ -1850,7 +2169,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 115
+        "y": 127
       },
       "id": 158,
       "interval": "10s",
@@ -1977,7 +2296,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 129
+        "y": 141
       },
       "id": 167,
       "interval": "1m",
@@ -2109,7 +2428,7 @@
             "value": "2024-12-31T11:59:59Z"
           }
         ],
-        "query": "2025-03-31T11:59:59Z",
+        "query": "2025-12-31T11:59:59Z",
         "type": "textbox"
       },
       {
@@ -2127,7 +2446,7 @@
             "value": "2024-01-01T00:00:00Z"
           }
         ],
-        "query": "2024-02-01T00:00:00Z",
+        "query": "2024-01-01T00:00:00Z",
         "type": "textbox"
       }
     ]
@@ -2152,6 +2471,6 @@
   "timezone": "",
   "title": "Hashicorp Vault",
   "uid": "vaults",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
