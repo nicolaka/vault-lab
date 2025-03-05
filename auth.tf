@@ -129,7 +129,7 @@ resource "vault_kubernetes_auth_backend_config" "kubernetes" {
   kubernetes_ca_cert     = kubernetes_secret.vault_auth.data["ca.crt"]
   token_reviewer_jwt     = kubernetes_secret.vault_auth.data.token
   disable_iss_validation = "true"
-  use_annotations_as_alias_metadata = "true"
+  #use_annotations_as_alias_metadata = "true"
 
 }
 
