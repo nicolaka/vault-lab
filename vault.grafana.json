@@ -43,21 +43,25 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "fieldMinMax": false,
           "mappings": [],
           "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "green",
                 "value": null
               },
               {
+                "color": "#EAB839",
+                "value": 70
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 90
               }
             ]
           },
@@ -123,7 +127,13 @@
               "type": "number"
             }
           ],
-          "computed_columns": [],
+          "computed_columns": [
+            {
+              "selector": "$entitlement",
+              "text": "Entitlement",
+              "type": "string"
+            }
+          ],
           "datasource": {
             "type": "yesoreyeram-infinity-datasource",
             "uid": "P8BCA6AF7BF6364B9"
@@ -156,6 +166,29 @@
         }
       ],
       "title": "Total Client Breakdown",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Non Entity Tokens": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "ACME Clients": 5,
+              "Clients": 1,
+              "Entitlement": 0,
+              "Entity Clients": 2,
+              "Non Entity Clients": 3,
+              "Non Entity Tokens": 4,
+              "Secret Sync Clients": 6
+            },
+            "renameByName": {
+              "Non Entity Clients": "Non Entity Clients / Tokens"
+            }
+          }
+        }
+      ],
       "type": "gauge"
     },
     {
@@ -345,15 +378,13 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
-            "align": "center",
+            "align": "auto",
             "cellOptions": {
-              "type": "auto",
-              "wrapText": false
+              "type": "auto"
             },
-            "filterable": true,
             "inspect": false
           },
           "fieldMinMax": false,
@@ -390,7 +421,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 134
+                "value": 289
               }
             ]
           }
@@ -405,14 +436,14 @@
       "id": 172,
       "interval": "1m",
       "options": {
-        "cellHeight": "md",
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
           ],
-          "show": true
+          "show": false
         },
         "showHeader": true,
         "sortBy": []
@@ -474,10 +505,23 @@
           "options": {
             "excludeByName": {
               "counts": true,
-              "mounts": true
+              "mounts": true,
+              "non_entity_tokens": true
             },
             "includeByName": {},
-            "indexByName": {},
+            "indexByName": {
+              "acme_clients": 5,
+              "clients": 4,
+              "counts": 0,
+              "distinct_entities": 6,
+              "entity_clients": 7,
+              "mounts": 1,
+              "namespace_id": 2,
+              "namespace_path": 3,
+              "non_entity_clients": 8,
+              "non_entity_tokens": 9,
+              "secret_syncs": 10
+            },
             "renameByName": {
               "namespace_id": "",
               "namespace_path": ""
@@ -486,6 +530,1797 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 168,
+      "interval": "1m",
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "clients",
+              "text": "Clients",
+              "type": "number"
+            },
+            {
+              "selector": "non_entity_clients",
+              "text": "Non Entity Clients",
+              "type": "number"
+            },
+            {
+              "selector": "entity_clients",
+              "text": "Entity Clients",
+              "type": "number"
+            },
+            {
+              "selector": "secret_syncs",
+              "text": "Secret Sync Clients",
+              "type": "number"
+            },
+            {
+              "selector": "acme_clients",
+              "text": "ACME Clients",
+              "type": "number"
+            }
+          ],
+          "computed_columns": [],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "data.total\n\n\n\n\n",
+          "source": "url",
+          "type": "json",
+          "uql": "parse-json\n| scope \"data.total\"\n\n\n",
+          "url": "/v1/sys/internal/counters/activity",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Total Client Breakdown by Namespace",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lease_id"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "creation_time"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_update_time"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Alias Name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name A"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name A"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mount_type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 152
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 11,
+        "x": 0,
+        "y": 47
+      },
+      "id": 174,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": true
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "mount_accessor",
+              "text": "mount_accessor",
+              "type": "string"
+            },
+            {
+              "selector": "mount_path",
+              "text": "mount_path",
+              "type": "string"
+            },
+            {
+              "selector": "mount_type",
+              "text": "mount_type",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "hide": false,
+          "parser": "simple",
+          "refId": "B",
+          "root_selector": "$.data.key_info.*",
+          "source": "url",
+          "type": "json",
+          "url": "/v1/identity/entity-alias/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "list",
+                "value": "true"
+              },
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Namespace - Client Distribution by Auth Method/Mounts",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "mount_accessor": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "mount_path": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "mount_type": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "mount_accessor (count)": 2,
+              "mount_path": 1,
+              "mount_type": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": []
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lease_id"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "creation_time"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_update_time"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Alias Name"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name A"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name A"
+            },
+            "properties": []
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "mount_type"
+            },
+            "properties": []
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 13,
+        "x": 11,
+        "y": 47
+      },
+      "id": 175,
+      "interval": "10s",
+      "options": {
+        "displayLabels": [
+          "name",
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true,
+          "values": [
+            "value"
+          ]
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [
+            {
+              "selector": "mount_accessor",
+              "text": "mount_accessor",
+              "type": "string"
+            },
+            {
+              "selector": "mount_path",
+              "text": "mount_path",
+              "type": "string"
+            },
+            {
+              "selector": "mount_type",
+              "text": "mount_type",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "hide": false,
+          "parser": "simple",
+          "refId": "B",
+          "root_selector": "$.data.key_info.*",
+          "source": "url",
+          "type": "json",
+          "url": "/v1/identity/entity-alias/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "list",
+                "value": "true"
+              },
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Namespace - Client Distribution by Auth Method/Mounts",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "mount_accessor": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "mount_path": {
+                "aggregations": []
+              },
+              "mount_type": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "mount_accessor (count)": 2,
+              "mount_path": 1,
+              "mount_type": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "applyToRow": true,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lease_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 156
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "creation_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 335
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 127
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_update_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 345
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 363
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 379
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 370
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 416
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Alias Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 63
+      },
+      "id": 164,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": true
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "entity_alias_metadata.service_account_uid"
+          }
+        ]
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [],
+          "computed_columns": [],
+          "csv_options": {
+            "skip_empty_lines": false
+          },
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "/v1/sys/internal/counters/activity/export",
+          "url_options": {
+            "data": "",
+            "headers": [],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              },
+              {
+                "key": "format",
+                "value": "csv"
+              },
+              {
+                "key": "start_time",
+                "value": "$start_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Vault Clients Explorer with Client Attribution ( 1.18+)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "client_id": 2,
+              "client_type": 5,
+              "entity_alias_name": 4,
+              "entity_name": 3,
+              "local_entity_alias": 10,
+              "mount_accessor": 7,
+              "mount_path": 8,
+              "mount_type": 9,
+              "namespace_id": 0,
+              "namespace_path": 1,
+              "timestamp": 6
+            },
+            "renameByName": {
+              "client_id": "Client ID",
+              "client_type": "Client Type",
+              "entity_alias_name": "Entity Alias Name",
+              "entity_name": "Entity Name",
+              "mount_accessor": "Mount Accessor",
+              "mount_path": "Mount Path",
+              "mount_type": "Mount Type",
+              "namespace_id": "Namespace ID",
+              "namespace_path": "Namespace Path",
+              "timestamp": "Timestame"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "description": "Combines two tables to show client attributions from export and entity-alias data",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "transparent",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "center",
+            "cellOptions": {
+              "applyToRow": true,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "lease_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 156
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "creation_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 335
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 127
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last_update_time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 345
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "namespace_path"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 132
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_custom_metadata.email"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 188
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 363
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "client_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 438
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_metadata.service_account_uid"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 370
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Timestame"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 213
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Client ID"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 416
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 203
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Alias Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_alias_name A"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 187
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "entity_name A"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 182
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 81
+      },
+      "id": 173,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "md",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": true
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [],
+          "computed_columns": [],
+          "csv_options": {
+            "skip_empty_lines": false
+          },
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "table",
+          "global_query_id": "",
+          "parser": "backend",
+          "refId": "A",
+          "root_selector": "",
+          "source": "url",
+          "type": "csv",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "/v1/sys/internal/counters/activity/export",
+          "url_options": {
+            "data": "",
+            "headers": [],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              },
+              {
+                "key": "format",
+                "value": "csv"
+              },
+              {
+                "key": "start_time",
+                "value": "$start_time"
+              }
+            ]
+          }
+        },
+        {
+          "columns": [
+            {
+              "selector": "canonical_id",
+              "text": "client_id",
+              "type": "string"
+            },
+            {
+              "selector": "custom_metadata",
+              "text": "custom_metadata",
+              "type": "string"
+            },
+            {
+              "selector": "local",
+              "text": "local",
+              "type": "string"
+            },
+            {
+              "selector": "mount_accessor",
+              "text": "mount_accessor",
+              "type": "string"
+            },
+            {
+              "selector": "metadata",
+              "text": "metadata",
+              "type": "string"
+            },
+            {
+              "selector": "mount_path",
+              "text": "mount_path",
+              "type": "string"
+            },
+            {
+              "selector": "mount_type",
+              "text": "mount_type",
+              "type": "string"
+            }
+          ],
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "hide": false,
+          "parser": "simple",
+          "refId": "B",
+          "root_selector": "$.data.key_info.*",
+          "source": "url",
+          "type": "json",
+          "url": "/v1/identity/entity-alias/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "list",
+                "value": "true"
+              },
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Namespace Vault Clients Explorer v2 (For Vault Versions <1.17)",
+      "transformations": [
+        {
+          "id": "joinByField",
+          "options": {
+            "byField": "client_id",
+            "mode": "inner"
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "yellow",
+            "mode": "continuous-blues"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "applyToRow": false,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metadata"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 283
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "custom_metadata"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 424
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "canonical_id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 412
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 96
+      },
+      "id": 165,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": false
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [],
+          "csv_options": {
+            "skip_empty_lines": false
+          },
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "json_options": {
+            "columnar": false,
+            "root_is_not_array": false
+          },
+          "parser": "simple",
+          "refId": "A",
+          "root_selector": "$.data.key_info.*",
+          "source": "url",
+          "type": "json",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "/v1/identity/entity-alias/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              },
+              {
+                "key": "list",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Entities Alias Explorer (By Namepsace)",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": []
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "default": false,
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "P8BCA6AF7BF6364B9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "semi-dark-red",
+            "mode": "continuous-greens"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "applyToRow": false,
+              "mode": "basic",
+              "type": "color-background",
+              "wrapText": true
+            },
+            "filterable": true,
+            "inspect": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Entity Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 268
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 109
+      },
+      "id": 158,
+      "interval": "10s",
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": true,
+          "enablePagination": true,
+          "fields": "",
+          "reducer": [
+            "count"
+          ],
+          "show": false
+        },
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Entity Name"
+          }
+        ]
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "columns": [],
+          "csv_options": {
+            "skip_empty_lines": false
+          },
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "P8BCA6AF7BF6364B9"
+          },
+          "filters": [],
+          "format": "dataframe",
+          "global_query_id": "",
+          "json_options": {
+            "columnar": false,
+            "root_is_not_array": false
+          },
+          "parser": "simple",
+          "refId": "A",
+          "root_selector": "$.data.key_info[*].*",
+          "source": "url",
+          "type": "json",
+          "uql": "parse-csv --delimiter \"\t\"",
+          "url": "/v1/identity/entity/id",
+          "url_options": {
+            "data": "",
+            "headers": [
+              {
+                "key": "X-Vault-Namespace",
+                "value": "$namespace"
+              }
+            ],
+            "method": "GET",
+            "params": [
+              {
+                "key": "end_time",
+                "value": "$end_time"
+              },
+              {
+                "key": "list",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ],
+      "title": "Entities Explorer ( by Namespace)",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "Nested frames": 2,
+              "id": 1,
+              "name": 0
+            },
+            "renameByName": {
+              "Nested frames": "",
+              "id": "Entity ID",
+              "name": "Entity Name"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Requests per second",
+            "axisPlacement": "left",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 16,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 3,
+            "pointSize": 8,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 123
+      },
+      "id": 61,
+      "options": {
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "maxHeight": 600,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "vault_identity_num_entities{}",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "GET",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Vault Entities Time Series Graph",
+      "transparent": true,
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -574,7 +2409,7 @@
         "h": 10,
         "w": 11,
         "x": 0,
-        "y": 35
+        "y": 137
       },
       "id": 161,
       "options": {
@@ -660,7 +2495,7 @@
         "h": 10,
         "w": 4,
         "x": 11,
-        "y": 35
+        "y": 137
       },
       "id": 136,
       "options": {
@@ -750,7 +2585,7 @@
         "h": 10,
         "w": 4,
         "x": 15,
-        "y": 35
+        "y": 137
       },
       "id": 166,
       "interval": "1m",
@@ -874,7 +2709,7 @@
         "h": 10,
         "w": 5,
         "x": 19,
-        "y": 35
+        "y": 137
       },
       "id": 159,
       "options": {
@@ -916,950 +2751,6 @@
     },
     {
       "datasource": {
-        "default": false,
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "transparent",
-            "mode": "fixed"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "applyToRow": true,
-              "mode": "basic",
-              "type": "color-background",
-              "wrapText": true
-            },
-            "filterable": true,
-            "inspect": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "lease_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 156
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "creation_time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 335
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "metadata"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 127
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "last_update_time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 345
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 136
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "namespace_path"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 132
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_custom_metadata.email"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 188
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 363
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "client_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 379
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_metadata.service_account_uid"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 370
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Timestame"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 213
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Client ID"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 416
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Entity Name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 203
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Entity Alias Name"
-            },
-            "properties": [
-              {
-                "id": "custom.width"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 45
-      },
-      "id": 164,
-      "interval": "10s",
-      "options": {
-        "cellHeight": "md",
-        "footer": {
-          "countRows": true,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "count"
-          ],
-          "show": true
-        },
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "entity_alias_metadata.service_account_uid"
-          }
-        ]
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "columns": [],
-          "computed_columns": [],
-          "csv_options": {
-            "skip_empty_lines": false
-          },
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "table",
-          "global_query_id": "",
-          "parser": "backend",
-          "refId": "A",
-          "root_selector": "",
-          "source": "url",
-          "type": "csv",
-          "uql": "parse-csv --delimiter \"\t\"",
-          "url": "/v1/sys/internal/counters/activity/export",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              },
-              {
-                "key": "format",
-                "value": "csv"
-              },
-              {
-                "key": "start_time",
-                "value": "$start_time"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Vault Clients Explorer",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {
-              "client_id": 2,
-              "client_type": 5,
-              "entity_alias_name": 4,
-              "entity_name": 3,
-              "local_entity_alias": 10,
-              "mount_accessor": 7,
-              "mount_path": 8,
-              "mount_type": 9,
-              "namespace_id": 0,
-              "namespace_path": 1,
-              "timestamp": 6
-            },
-            "renameByName": {
-              "client_id": "Client ID",
-              "client_type": "Client Type",
-              "entity_alias_name": "Entity Alias Name",
-              "entity_name": "Entity Name",
-              "mount_accessor": "Mount Accessor",
-              "mount_path": "Mount Path",
-              "mount_type": "Mount Type",
-              "namespace_id": "Namespace ID",
-              "namespace_path": "Namespace Path",
-              "timestamp": "Timestame"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "default": false,
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "transparent",
-            "mode": "fixed"
-          },
-          "custom": {
-            "align": "center",
-            "cellOptions": {
-              "applyToRow": true,
-              "mode": "basic",
-              "type": "color-background",
-              "wrapText": true
-            },
-            "filterable": true,
-            "inspect": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "lease_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 156
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "creation_time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 335
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "metadata"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 127
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "last_update_time"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 345
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 136
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "namespace_path"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 132
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_custom_metadata.email"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 188
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 363
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "client_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 379
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "entity_alias_metadata.service_account_uid"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 370
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Timestame"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 213
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Client ID"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 416
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Entity Name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 203
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Entity Alias Name"
-            },
-            "properties": [
-              {
-                "id": "custom.width"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 59
-      },
-      "id": 173,
-      "interval": "10s",
-      "options": {
-        "cellHeight": "md",
-        "footer": {
-          "countRows": true,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "count"
-          ],
-          "show": true
-        },
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "entity_alias_metadata.service_account_uid"
-          }
-        ]
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "columns": [
-            {
-              "selector": "",
-              "text": "",
-              "type": "string"
-            }
-          ],
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "dataframe",
-          "global_query_id": "",
-          "hide": false,
-          "parser": "simple",
-          "refId": "B",
-          "root_selector": "",
-          "source": "url",
-          "type": "json",
-          "url": "/v1/identity/entity-alias/id",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "list",
-                "value": "true"
-              },
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              }
-            ]
-          }
-        },
-        {
-          "columns": [],
-          "computed_columns": [],
-          "csv_options": {
-            "skip_empty_lines": false
-          },
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "table",
-          "global_query_id": "",
-          "parser": "backend",
-          "refId": "A",
-          "root_selector": "",
-          "source": "url",
-          "type": "csv",
-          "uql": "parse-csv --delimiter \"\t\"",
-          "url": "/v1/sys/internal/counters/activity/export",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              },
-              {
-                "key": "format",
-                "value": "csv"
-              },
-              {
-                "key": "start_time",
-                "value": "$start_time"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Vault Clients Explorer v2",
-      "transformations": [
-        {
-          "id": "joinByField",
-          "options": {
-            "byField": "A client_id",
-            "mode": "outer"
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "fieldMinMax": false,
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
-        "y": 73
-      },
-      "id": 168,
-      "interval": "1m",
-      "options": {
-        "minVizHeight": 75,
-        "minVizWidth": 75,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "columns": [
-            {
-              "selector": "clients",
-              "text": "Clients",
-              "type": "number"
-            },
-            {
-              "selector": "non_entity_clients",
-              "text": "Non Entity Clients",
-              "type": "number"
-            },
-            {
-              "selector": "entity_clients",
-              "text": "Entity Clients",
-              "type": "number"
-            },
-            {
-              "selector": "non_entity_tokens",
-              "text": "Non Entity Tokens",
-              "type": "number"
-            },
-            {
-              "selector": "secret_syncs",
-              "text": "Secret Sync Clients",
-              "type": "number"
-            },
-            {
-              "selector": "acme_clients",
-              "text": "ACME Clients",
-              "type": "number"
-            }
-          ],
-          "computed_columns": [],
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "table",
-          "global_query_id": "",
-          "parser": "backend",
-          "refId": "A",
-          "root_selector": "data.total\n\n\n\n\n",
-          "source": "url",
-          "type": "json",
-          "uql": "parse-json\n| scope \"data.total\"\n\n\n",
-          "url": "/v1/sys/internal/counters/activity",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Total Client Breakdown by Namespace",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "default": false,
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "yellow",
-            "mode": "continuous-blues"
-          },
-          "custom": {
-            "align": "left",
-            "cellOptions": {
-              "applyToRow": false,
-              "mode": "basic",
-              "type": "color-background",
-              "wrapText": true
-            },
-            "filterable": true,
-            "inspect": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "metadata"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 283
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "custom_metadata"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 424
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "canonical_id"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 412
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 13,
-        "w": 24,
-        "x": 0,
-        "y": 85
-      },
-      "id": 165,
-      "interval": "10s",
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": true,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "count"
-          ],
-          "show": false
-        },
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": []
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "columns": [],
-          "csv_options": {
-            "skip_empty_lines": false
-          },
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "dataframe",
-          "global_query_id": "",
-          "json_options": {
-            "columnar": false,
-            "root_is_not_array": false
-          },
-          "parser": "simple",
-          "refId": "A",
-          "root_selector": "$.data.key_info.*",
-          "source": "url",
-          "type": "json",
-          "uql": "parse-csv --delimiter \"\t\"",
-          "url": "/v1/identity/entity-alias/id",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              },
-              {
-                "key": "list",
-                "value": "true"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Entities Alias Explorer (By Namepsace)",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "format": "json",
-            "jsonPaths": []
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
@@ -1890,7 +2781,7 @@
         "h": 15,
         "w": 14,
         "x": 0,
-        "y": 98
+        "y": 147
       },
       "id": 120,
       "options": {
@@ -1961,7 +2852,7 @@
         "h": 15,
         "w": 10,
         "x": 14,
-        "y": 98
+        "y": 147
       },
       "id": 49,
       "maxDataPoints": 1000,
@@ -2015,255 +2906,6 @@
     },
     {
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisBorderShow": false,
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "Requests per second",
-            "axisPlacement": "left",
-            "barAlignment": 0,
-            "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 16,
-            "gradientMode": "hue",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 3,
-            "pointSize": 8,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "always",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "links": [],
-          "mappings": [],
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 113
-      },
-      "id": 61,
-      "options": {
-        "legend": {
-          "calcs": [
-            "mean",
-            "lastNotNull",
-            "max",
-            "min"
-          ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "maxHeight": 600,
-          "mode": "multi",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "expr": "vault_identity_num_entities{}",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "GET",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Vault Entities Time Series Graph",
-      "transparent": true,
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "default": false,
-        "type": "yesoreyeram-infinity-datasource",
-        "uid": "P8BCA6AF7BF6364B9"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-red",
-            "mode": "continuous-greens"
-          },
-          "custom": {
-            "align": "left",
-            "cellOptions": {
-              "applyToRow": false,
-              "mode": "basic",
-              "type": "color-background",
-              "wrapText": true
-            },
-            "filterable": true,
-            "inspect": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 14,
-        "w": 24,
-        "x": 0,
-        "y": 127
-      },
-      "id": 158,
-      "interval": "10s",
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": true,
-          "enablePagination": true,
-          "fields": "",
-          "reducer": [
-            "count"
-          ],
-          "show": false
-        },
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Entity Name"
-          }
-        ]
-      },
-      "pluginVersion": "11.4.0",
-      "targets": [
-        {
-          "columns": [],
-          "csv_options": {
-            "skip_empty_lines": false
-          },
-          "datasource": {
-            "type": "yesoreyeram-infinity-datasource",
-            "uid": "P8BCA6AF7BF6364B9"
-          },
-          "filters": [],
-          "format": "dataframe",
-          "global_query_id": "",
-          "json_options": {
-            "columnar": false,
-            "root_is_not_array": false
-          },
-          "parser": "simple",
-          "refId": "A",
-          "root_selector": "$.data.key_info[*].*",
-          "source": "url",
-          "type": "json",
-          "uql": "parse-csv --delimiter \"\t\"",
-          "url": "/v1/identity/entity/id",
-          "url_options": {
-            "data": "",
-            "headers": [
-              {
-                "key": "X-Vault-Namespace",
-                "value": "$namespace"
-              }
-            ],
-            "method": "GET",
-            "params": [
-              {
-                "key": "end_time",
-                "value": "$end_time"
-              },
-              {
-                "key": "list",
-                "value": "true"
-              }
-            ]
-          }
-        }
-      ],
-      "title": "Entities Explorer ( by Namespace)",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "includeByName": {},
-            "indexByName": {
-              "Nested frames": 2,
-              "id": 1,
-              "name": 0
-            },
-            "renameByName": {
-              "Nested frames": "",
-              "id": "Entity ID",
-              "name": "Entity Name"
-            }
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "P8BCA6AF7BF6364B9"
       },
@@ -2296,7 +2938,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 141
+        "y": 162
       },
       "id": 167,
       "interval": "1m",
@@ -2428,7 +3070,7 @@
             "value": "2024-12-31T11:59:59Z"
           }
         ],
-        "query": "2025-12-31T11:59:59Z",
+        "query": "2024-12-31T11:59:59Z",
         "type": "textbox"
       },
       {
@@ -2447,6 +3089,24 @@
           }
         ],
         "query": "2024-01-01T00:00:00Z",
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "text": "100",
+          "value": "100"
+        },
+        "description": "",
+        "label": "entitlement",
+        "name": "entitlement",
+        "options": [
+          {
+            "selected": true,
+            "text": "100",
+            "value": "100"
+          }
+        ],
+        "query": "100",
         "type": "textbox"
       }
     ]
@@ -2471,6 +3131,6 @@
   "timezone": "",
   "title": "Hashicorp Vault",
   "uid": "vaults",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
