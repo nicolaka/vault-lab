@@ -9,6 +9,6 @@ reporting {
   disable_product_usage_reporting = false
   license {
     enabled = true
-    billing_start_timestamp = "2025-01-01T00:00:00Z"
+   # billing_start_timestamp = "2024-07-01T00:00:00Z"
   }
 }
