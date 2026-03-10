@@ -1,0 +1,3 @@
+{
+    "input": "{\"write\":[\"WRITE_PRECOMPUTED_QUERIES\"],\"data\":[{\"months_ago\":1,\"all\":{\"clients\":[{\"count\":20}]}}]}"
+}

@@ -139,8 +139,8 @@ resource "vault_kubernetes_auth_backend_role" "app_a" {
   backend                          = vault_auth_backend.kubernetes.path
   role_name                        = "app_a"
   bound_service_account_names      = ["default"]
-  alias_name_source                = "serviceaccount_name"
-  #alias_name_source                = "serviceaccount_uid" # Service Account UUID is another option
+  #alias_name_source                = "serviceaccount_name"
+  alias_name_source                = "serviceaccount_uid" # Service Account UUID is another option
   bound_service_account_namespaces = [kubernetes_namespace.blue.id]
   token_ttl                        = 3600
   token_policies                   = ["blue"]

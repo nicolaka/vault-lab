@@ -21,14 +21,14 @@ variable "vault_license" {
 variable "vault_helm_version" {
   type = string
   description = "Vault's Helm Release Version"
-  default = "0.29.1"
+  default = "0.32.0"
 }
 
 # Vault Secret Operator Version
 variable "vso_helm_version" {
   type = string
   description = "Vault Secret Operator Helm Release Version"
-  default = "0.9.1"
+  default = "1.3.0"
 }
 
 

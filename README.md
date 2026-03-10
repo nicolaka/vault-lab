@@ -4,12 +4,12 @@
 
 ### Goal
 
-Vault Clients are the core licensing metrics for Vault Enterprise and HCP Vault. As critical as they are, there's been confusion and lack of practical guidance around understanding how they work in practice. This repo reprsents a sample enviornment with the intention of providing the necessary end-to-end deployment and assets to gain deeper understanding of how clients work. 
+Vault Clients are the core licensing metrics for Vault Enterprise and HCP Vault. As critical as they are, there's been confusion and lack of practical guidance around understanding how they work in practice. This repo represents a sample environment with the intention of providing the necessary end-to-end deployment and assets to gain deeper understanding of how clients work.
 
 
 ### Deployment Scenario
 
-- Vault is deployed in dev mode using Helm chart. Sidecar injector, VSO and an LDAP service are also deployed into the same Kubernets namespace called `vault`. 
+- Vault is deployed in dev mode using Helm chart. Sidecar injector, VSO and an LDAP service are also deployed into the same Kubernetes namespace called `vault`.
 - There are two Vault namespaces: Blue and Red
 - Human Users: Bob, Alice, Dave have both LDAP and Userpass accounts
 - Bob is part of the Blue group, Alice and Dave are part of the Red group
@@ -20,7 +20,7 @@ Vault Clients are the core licensing metrics for Vault Enterprise and HCP Vault.
 - App B has access to `kv/app/config` secret in KV secret engine in the Red namespace via the `red` policy
 - There are pre-created entities and entity aliases for Bob, Alice, App A and App B
 
-> Note: We're intentionally not creating & associating Alice's userpass alias and we're not creating an entity for Dave to demonstrate how Vault will automatically create it. 
+> Note: We're intentionally not creating & associating Alice's userpass alias and we're not creating an entity for Dave to demonstrate how Vault will automatically create it.
 
 
 ### Lab Overview
@@ -30,7 +30,7 @@ This repo provides the needed assets to bootstrap a working lab composed of:
 - Vault Enterprise (Single Instance)
     * Vault Namespaces
         - Blue Namespace
-        - Red Namepsace
+        - Red Namespace
     * Auth Methods & Roles
         - Userpass
         - LDAP
@@ -39,43 +39,43 @@ This repo provides the needed assets to bootstrap a working lab composed of:
     * Policies
         - Blue Policy
         - Red Policy
-    * Entities  & Aliases
+    * Entities & Aliases
 
 - LDAP Server (SAMBA)
-    - Bootstrapped LDAP Server with two groups (Blue and Red) and three users (Alice, Bob, Dave) all with the password `P@ssword1` 
+    - Bootstrapped LDAP Server with two groups (Blue and Red) and three users (Alice, Bob, Dave) all with the password `P@ssword1`
 - Vault Secrets Operator (VSO)
 - Vault Sidecar Injector
 - Kubernetes Namespaces
-    - Vault Namespace: used to deloy Vault , VSO, Sidecar Injector, LDAP server
+    - Vault Namespace: used to deploy Vault, VSO, Sidecar Injector, LDAP server
     - Red & Blue Namespaces for Application Deployments
 - Kubernetes Application Deployment
-    - App A and App B are sample bogus k8s application that uses a secret from Vault to be used to showcase VSO/Sidecar
-- Vault Benchmark Tool 
-- Prometheus + Grafana Stack 
+    - App A and App B are sample bogus k8s applications that use a secret from Vault to showcase VSO/Sidecar
+- Vault Benchmark Tool
+- Prometheus + Grafana Stack
 
 
 ### Requirements:
 
-- Vault Enterprise License 
-- [Docker for Mac/Windows](https://docs.docker.com/desktop/install/mac-install/) with Kubernetes turned on (only tested this on Docker for Mac)
+- Vault Enterprise License
+- [Docker for Mac/Windows](https://docs.docker.com/desktop/install/mac-install/) with Kubernetes turned on (only tested on Docker for Mac)
 - Terraform CLI
 - Vault CLI
 - `kubectl` CLI
-- [httpie](https://httpie.io/) which is easier/cooler version of `curl`. You can use just curl but need to convert the commands :)
+- [HTTPie](https://httpie.io/) — an easier/friendlier alternative to `curl`. You can use curl but will need to convert the commands.
 
 
 ### Deployment Steps
 
-1. Clone this repo into your local environment that has Docker for Mac/Windows running. 
+1. Clone this repo into your local environment that has Docker for Mac/Windows running.
 
 2. Ensure that `kubectl` is correctly configured
 
 ```
- $ kubectl get nodes
+$ kubectl get nodes
 NAME             STATUS   ROLES           AGE   VERSION
 docker-desktop   Ready    control-plane   63d   v1.28.2
 
- $ kubectl cluster-info     
+$ kubectl cluster-info
 Kubernetes control plane is running at https://kubernetes.docker.internal:6443
 CoreDNS is running at https://kubernetes.docker.internal:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
@@ -84,17 +84,16 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 3. Edit the `variables.tf` file and add a valid Vault Enterprise license under the default value.
 
-4. Ensure that your Docker Desktop Kubernetes configs are located in `~/.kube/config` or update the kubernetes provider config in the `providers.tf` file to reflect the actual path for your kubernetes config if it's not `~/.kube/config`. 
+4. Ensure that your Docker Desktop Kubernetes configs are located in `~/.kube/config` or update the kubernetes provider config in the `providers.tf` file to reflect the actual path for your kubernetes config if it's not `~/.kube/config`.
 
-> Note: If you are running Terraform on natively on Mac/Windows(locally) then you need to update the Vault provider configs under `provider.tf` and choose the right `address` config (details in the comments in provider.tf) 
+> Note: If you are running Terraform natively on Mac/Windows (locally) then you need to update the Vault provider configs under `provider.tf` and choose the right `address` config (details in the comments in provider.tf).
 
-> Note: If you've never installed Vault Secret Operator(VSO) before on your Kubernetes cluster, you would need to first run the Terraform first with commented out "blue-vault-connection-default" and "blue-vault-auth-default" in deployment.tf, ensure that the CRDs are deployed, and re-run Terraform with these two resources uncommented. 
+> Note: If you've never installed Vault Secrets Operator (VSO) before on your Kubernetes cluster, you would need to first run Terraform with `blue-vault-connection-default` and `blue-vault-auth-default` commented out in `deployment.tf`, ensure that the CRDs are deployed, and re-run Terraform with these two resources uncommented.
 
 5. Initialize Terraform and run Terraform Plan/Apply
 
-
 ```
-$ terraform init                
+$ terraform init
 
 Initializing the backend...
 
@@ -132,10 +131,10 @@ dave_entity_lookup_id = "fbd55dbe-bfdb-5b49-c8b9-14c6667b37a5"
 
 ```
 
-6. It will take a few minutes for the deloyment to finish, once it does you can validate that it deployed successfully
+6. It will take a few minutes for the deployment to finish, once it does you can validate that it deployed successfully
 
 ```
-$ kubeclt get pod -n vault
+$ kubectl get pod -n vault
 NAME                                                            READY   STATUS      RESTARTS   AGE
 alertmanager-prometheus-kube-prometheus-alertmanager-0          2/2     Running     0          3m3s
 benchmark-jhf5q                                                 0/1     Completed   0          2m28s
@@ -150,7 +149,7 @@ vault-agent-injector-559b9646cb-flbq7                           1/1     Running 
 vso-vault-secrets-operator-controller-manager-9df69fbd5-phw9j   2/2     Running     0          3m10s
 
 
-$  kubectl get ns    
+$ kubectl get ns
 NAME              STATUS   AGE
 blue              Active   2m21s
 default           Active   63d
@@ -162,35 +161,34 @@ vault             Active   2m21s
 
 ```
 
-7. Once you deploy, these are the exposed services that you can acccess via your web browser:
+7. Once deployed, these are the exposed services accessible via your web browser:
 
-| Name | Description | IP/Port | Credentials
+| Name | Description | IP/Port | Credentials |
 | - | - | - | - |
 | Vault Enterprise | Vault Enterprise Server - Single Replica | `http://localhost:30001` | `root` |
 | Prometheus | Prometheus Server | `http://localhost:30090` | None |
 | Grafana | Grafana Server | `http://localhost:30002` | `admin/vault` |
 
-8. Now you can access Vault's UI from your local machine browser. On Mac, you can use `http://localhost:30001` and it should take you to Vault's UI. You can login using token method with the token value of `root`. 
-
+8. Access Vault's UI from your local machine browser at `http://localhost:30001`. Log in using the token method with the value `root`.
 
 
 ![img](img/vault_ui_7a.png)
 
 
-You can see that the client count is 0 at this point given that no users/applications have authenticated into Vault. If you go to `Access` tab you can see that we have a number of auth methods configured (**approle, kubernetes,ldap,token,userpass**). All of which are configured under the root namespace.
+You can see that the client count is 0 at this point given that no users/applications have authenticated into Vault. If you go to the `Access` tab you can see that we have a number of auth methods configured (**approle, kubernetes, ldap, token, userpass**). All of which are configured under the root namespace.
 
 > Note: Entities are scoped to the Vault namespace. Therefore, it's important to plan ahead and place auth methods in the root (or parent) namespace to be considered as 1 client in all namespaces.
 
-If you go to `Entities` tab, you can see that there are pre-created entities for `Bob`, `Alice`, `app_a` and `app_b`. There are also pre-created entity aliases created and associated with these entities. Note that both `app_a` and `app_b` have a kubernetes alias associated with their entities. 
+If you go to the `Entities` tab, you can see that there are pre-created entities for `Bob`, `Alice`, `app_a` and `app_b`. There are also pre-created entity aliases created and associated with these entities. Note that both `app_a` and `app_b` have a kubernetes alias associated with their entities.
 
 
 ![img](img/vault_ui_7b.png)
 
 
-8. Let's explore Vault's API to check entities/clients. Here i'm using `localhost`, you can alternatively use the kubernetes service IP for Vault that you can get via
+9. Let's explore Vault's API to check entities/clients. Here I'm using `localhost`; you can alternatively use the Kubernetes service IP for Vault via:
 
 ```
-$ kubectl get svc -n vault          
+$ kubectl get svc -n vault
 NAME                                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE
 alertmanager-operated                        ClusterIP   None             <none>        9093/TCP,9094/TCP,9094/UDP      3m24s
 ldap                                         ClusterIP   10.110.219.67    <none>        389/TCP,636/TCP                 3m50s
@@ -232,7 +230,7 @@ $ http $VAULT_ADDR/v1/sys/internal/counters/entities "X-Vault-Token: $VAULT_TOKE
     "wrap_info": null
 }
 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity "X-Vault-Token: $VAULT_TOKEN" 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity "X-Vault-Token: $VAULT_TOKEN"
 ...
 
 {
@@ -258,7 +256,7 @@ $ http $VAULT_ADDR/v1/sys/internal/counters/activity "X-Vault-Token: $VAULT_TOKE
     "wrap_info": null
 }
 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN" 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN"
 
 ...
 {
@@ -283,30 +281,30 @@ $ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VA
 ```
 
 
-9. Let's make a few observations here:
+10. Let's make a few observations here:
 
--  First, you can see from the Terraform output that Bob's pre created entity ID matches the entity ID associated with the token (`2129b0a3-32fa-da3f-06c6-804d00bda5ba`) while that's not the case for Alice. This is due to the fact that we never created or associated a userpass alias to Alice's entity. So we should expect Alice to be able to authenticate, but Vault wouldn't recognize it as having an exisiting entity and therefore it will create a new entity for it (see below)
+-  First, you can see from the Terraform output that Bob's pre-created entity ID matches the entity ID associated with the token (`2129b0a3-32fa-da3f-06c6-804d00bda5ba`) while that's not the case for Alice. This is because we never created or associated a userpass alias to Alice's entity. So we should expect Alice to be able to authenticate, but Vault won't recognize an existing entity and will therefore create a new one for her (see below).
 
 ![img](img/vault_ui_9a.png)
 
-- Second, from Vault's portal, and under the entities dashboard, you can see that both `app_a` and `app_b` have 2 aliases each representing `k8s` and `approle` auth methods. Therefore, authenticating using approle did not create a new entity or entity alias for `app_b`. 
+- Second, from Vault's portal under the entities dashboard, you can see that both `app_a` and `app_b` have 2 aliases each representing the `k8s` and `approle` auth methods. Therefore, authenticating using approle did not create a new entity or entity alias for `app_b`.
 
 ![img](img/vault_ui_9b2.png)
 
-- Third, we see a newly created entity *and* entity alias for Dave with an entity alias named `Dave`. Given that we never created an entity for Dave, nor did we create an alias. Vault created both an entity and associated alias for Dave. 
+- Third, we see a newly created entity *and* entity alias for Dave named `Dave`. Since we never created an entity for Dave or an alias, Vault created both automatically.
 
-- Finally, notice anything interesting about the client count (below) ? It's still saying there are zero clients. This is because clients are only incremented/created upon successful API request post-authentication (e.g getting secrets, loading the UI, writing secrets..etc). Therefore, the process of authentication into Vault by itself doesn't increment client count. Authenticating into Vault creates entities/entity aliases, but subsequent authenticated API calls using the token will create the client
+- Finally, notice anything interesting about the client count (below)? It's still showing zero clients. This is because clients are only incremented upon a successful API request post-authentication (e.g. getting secrets, loading the UI, writing secrets, etc.). The act of authenticating into Vault alone doesn't increment client count — it creates entities/entity aliases, but subsequent authenticated API calls using the token will create the client.
 
 ![img](img/vault_ui_9c.png)
 
-10. Let's prove that out! If you open a new Vault window, and login using Bob's LDAP credentials (username=`Bob`, password=`P@ssword1`) then you'll see the client count increment by 1.
+11. Let's prove that out! Open a new Vault window and log in using Bob's LDAP credentials (username=`Bob`, password=`P@ssword1`). You'll see the client count increment by 1.
 
 ![img](img/vault_ui_10.png)
 
 
-11. Now let's shift to Kubernetes. We will be deploying two applications `app-a` and `app-b` as kubernetes deployments into the `blue` and `red` k8s namespaces respectively. `app-a` will leverage VSO to retrieve secrets from Vault and `app-b` will use sidecar injection to retrieve secrets from Vault. 
+12. Now let's shift to Kubernetes. We will be deploying two applications — `app-a` into the `blue` k8s namespace and `app-b` into the `red` k8s namespace. `app-a` will leverage VSO to retrieve secrets from Vault and `app-b` will use sidecar injection.
 
-> Optional: You can view the vault raw audit logging to get more detailed logs when k8s apps authenticate into Vault. You can do that by opening a new terminal and running these commands:
+> Optional: You can view the Vault raw audit log for more detailed logs when k8s apps authenticate into Vault:
 ```
 $ kubectl exec -it vault-0 -n vault -- /bin/sh
 / $ tail -f /tmp/vault.log
@@ -314,27 +312,26 @@ $ kubectl exec -it vault-0 -n vault -- /bin/sh
 ```
 
 
-
 Now let's deploy `app-a` first:
 
 ```
-$  kubectl apply -f app-a.yml -n blue                       
+$ kubectl apply -f app-a.yml -n blue
 deployment.apps/app-a created
 vaultstaticsecret.secrets.hashicorp.com/vault-kv-app created
 
-$ kubectl get pod -n blue                 
+$ kubectl get pod -n blue
 NAME                     READY   STATUS    RESTARTS   AGE
 app-a-5bdb596b48-87qh7   1/1     Running   0          11s
 
-$ kubectl get secret -n blue                        
+$ kubectl get secret -n blue
 NAME           TYPE     DATA   AGE
 vault-kv-app   Opaque   3      27s
 ```
 
-If you see that the application is in the `Running` state, that means it was able to successfully create the secret object from Vault using VSO. Let's check the client count:
+If the application is in `Running` state, it successfully created the secret object from Vault using VSO. Let's check the client count:
 
 ```
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN" 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN"
 ...
 
         "by_namespace": [
@@ -378,7 +375,7 @@ $ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VA
 ...
 ```
 
-You can see that there are two clients now. The newly added k8s client after `app_a` was deloyed and VSO used its k8s auth to retrieve a secret on its behalf.  We can also see an audit log entry with very detailed log of the auth request. Particularly, you can see service account details that were used when matching this pod to the exisiting `app_a` entity and `entity_alias`. Because of that, Vault will not create any new entities or entity aliases. It will recognize the exisiting ones and associate this pod (via its service account name in this case) to the exisiting entity and entity alias. 
+There are now two clients: the original Bob (LDAP) and the newly added k8s client from `app_a` being deployed. VSO used its k8s auth to retrieve a secret on `app_a`'s behalf. We can also see an audit log entry with a detailed log of the auth request — notably the service account details used when matching this pod to the existing `app_a` entity and entity alias. Because of that, Vault will not create any new entities or entity aliases; it recognizes the existing ones and associates this pod (via its service account name) to the existing entity and entity alias.
 
 ```
 {
@@ -463,24 +460,24 @@ You can see that there are two clients now. The newly added k8s client after `ap
 }
 ```
 
-12. Now let's deploy `app-b`:
+13. Now let's deploy `app-b`:
 
 ```
-$ kubectl apply -f app-b.yml -n red 
+$ kubectl apply -f app-b.yml -n red
 deployment.apps/app-b created
 
-$  kubectl get pod -n red           
+$ kubectl get pod -n red
 NAME                     READY   STATUS    RESTARTS   AGE
 app-b-586f7fddb8-6kpsk   2/2     Running   0          7s
 
 ```
 
-Checking again the client count:
+Checking the client count again:
 
 ![img](img/vault_ui_12.png)
 
 ```
- $ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN" 
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN"
 ...
     "data": {
         "by_namespace": [
@@ -521,10 +518,10 @@ Checking again the client count:
         "clients": 3,
         "distinct_entities": 3,
         "entity_clients": 3,
- 
+
 ```
 
-Similarily, we have a detailed audit log to show us the auth request details:
+Similarly, we have a detailed audit log showing the auth request details:
 
 ```
 {
@@ -609,14 +606,13 @@ Similarily, we have a detailed audit log to show us the auth request details:
 }
 ```
 
-13. Done :) below, are some additional references on Vault API, Prometheus / Grafana, and key takeaways. 
+14. Done! Below are some additional references on Vault API, Prometheus/Grafana, and key takeaways.
 
 ### Vault API Identity + Clients Reference
 ```
 
-
-# ENSURE THAT THE START AND END TIMES REPRESENT THE CUSTOMERS' 12 MONTH BILLING CYCLE 
-# MAKE SURE THAT THE END DATE DOES NOT FALL IN THE CURRENT MONTH 
+# ENSURE THAT THE START AND END TIMES REPRESENT THE CUSTOMERS' 12 MONTH BILLING CYCLE
+# MAKE SURE THAT THE END DATE DOES NOT FALL IN THE CURRENT MONTH
 
 $ export VAULT_ADDR=<Vault Address>
 $ export VAULT_TOKEN=<Vault Token>
@@ -624,59 +620,59 @@ $ export START_TIME="2025-01-01T00:00:00Z"
 $ export END_TIME="2025-12-31T11:59:59Z"
 
 
-# Returns total client count breakdown by auth method, namespace and new clients by month (HTTpie or Curl) 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN" 
+# Returns total client count breakdown by auth method, namespace and new clients by month (HTTPie or curl)
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN"
 $ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
 
-# Returns a list of unique clients that had activity within the provided start/end time (HTTpie or Curl) 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity/export start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN" 
+# Returns a list of unique clients that had activity within the provided start/end time (HTTPie or curl)
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/export start_time==$START_TIME end_time==$END_TIME "X-Vault-Token: $VAULT_TOKEN"
 $ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity/export?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
 
-# Returns ALL (non-duplicated) client activity for the current month (HTTpie or Curl) 
-$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN" 
+# Returns ALL (non-duplicated) client activity for the current month (HTTPie or curl)
+$ http $VAULT_ADDR/v1/sys/internal/counters/activity/monthly "X-Vault-Token: $VAULT_TOKEN"
 $ curl --header "X-Vault-Token: $VAULT_TOKEN" --request GET "$VAULT_ADDR/v1/sys/internal/counters/activity/monthly?format=json&end_time=$END_TIME&start_time=$START_TIME" | jq;
 
 ```
 
 ### Prometheus + Grafana Dashboards
 
-We deployed a full Prometheus + Grafana Stack and loaded up a sample Grafana dashboard to monitor Vault and VSO. You can access Grafana using `http://localhost:30002` and login with username `admin` and password `vault`. Then go to **Dashboards > HashiCorp Vault** 
+We deployed a full Prometheus + Grafana Stack and loaded up a sample Grafana dashboard to monitor Vault and VSO. You can access Grafana using `http://localhost:30002` and login with username `admin` and password `vault`. Then go to **Dashboards > HashiCorp Vault**.
 
 ![img](img/vault_grafana_dashboard.png)
 
 
 ## Grafana Dashboard Summary
-| Name | Description | Data Source (API or Telemetry) | Type | Scope  | Implementation Status |
-| - | - | - | - | -| -| 
-| Current Total Entity Count | The total number of identity entities currently stored in Vault | `vault.identity.num_entities` | `Gauge` | Global |  ✅ | 
-| Current Total Entity Count Time-Series Graph | The total number of identity entities currently stored in Vault | `vault.identity.num_entities` | `Time-Series Graph` | Global |  ✅ | 
-| Entity List | A list of identity entities currently stored in Vault | `/v1/identity/entity/name?list=true` | `Table` | Global |  ✅ | 
-| Entity Alias Count by Auth Method | The number of identity entity aliases by auth method | `vault_identity_entity_alias_count` | `Chart` | Global |  ✅ | 
-| Entity Alias Count by Namespace | The number of identity entity aliases by namespace | `vault_identity_entity_alias_count` | `Chart` | Global | ❌ | 
-| Vault Clients Summary (Current Month) | A summary of distinct entities that created a token during the current month | `/internal/counters/activity/monthly` | `Table` | Global |  ✅ | 
-| Active Clients Count (Current Month) | The number of distinct entities (per namespace) that created a token during the current month | `vault.identity.entity.active.partial_month` |`Gauge`| Global |  ✅ |
-| Active Clients Count (Current Month) Time-Series Graph| The number of distinct entities (per namespace) that created a token during the current month | `vault.identity.entity.active.partial_month` | `Time-Series Graph` | Global |  ✅ |
-| Monthly Client Clount Time-Series Graph| The number of distinct entities (per namespace) that created a token during the past month | `vault.identity.entity.active.monthly` | `Time-Series Graph` | Global |  ✅ |  
-| Active Client Details| Detailed summary of clients | `/v1/sys/internal/counters/activity/export` | `Table` | Global |  ✅ |  
-| Entity Alias Details| Detailed summary of entity aliases | `/v1/identity/alias/id?list=true` | `Table` | Global |  ✅ |  
+| Name | Description | Data Source (API or Telemetry) | Type | Scope | Implementation Status |
+| - | - | - | - | - | - |
+| Current Total Entity Count | The total number of identity entities currently stored in Vault | `vault.identity.num_entities` | `Gauge` | Global | ✅ |
+| Current Total Entity Count Time-Series Graph | The total number of identity entities currently stored in Vault | `vault.identity.num_entities` | `Time-Series Graph` | Global | ✅ |
+| Entity List | A list of identity entities currently stored in Vault | `/v1/identity/entity/name?list=true` | `Table` | Global | ✅ |
+| Entity Alias Count by Auth Method | The number of identity entity aliases by auth method | `vault_identity_entity_alias_count` | `Chart` | Global | ✅ |
+| Entity Alias Count by Namespace | The number of identity entity aliases by namespace | `vault_identity_entity_alias_count` | `Chart` | Global | ❌ |
+| Vault Clients Summary (Current Month) | A summary of distinct entities that created a token during the current month | `/internal/counters/activity/monthly` | `Table` | Global | ✅ |
+| Active Clients Count (Current Month) | The number of distinct entities (per namespace) that created a token during the current month | `vault.identity.entity.active.partial_month` | `Gauge` | Global | ✅ |
+| Active Clients Count (Current Month) Time-Series Graph | The number of distinct entities (per namespace) that created a token during the current month | `vault.identity.entity.active.partial_month` | `Time-Series Graph` | Global | ✅ |
+| Monthly Client Count Time-Series Graph | The number of distinct entities (per namespace) that created a token during the past month | `vault.identity.entity.active.monthly` | `Time-Series Graph` | Global | ✅ |
+| Active Client Details | Detailed summary of clients | `/v1/sys/internal/counters/activity/export` | `Table` | Global | ✅ |
+| Entity Alias Details | Detailed summary of entity aliases | `/v1/identity/alias/id?list=true` | `Table` | Global | ✅ |
 
 
 ### Conclusion
 
-Understanding how entities, entity aliases and clients work in Vault is critical for both deploying a secure secret management solution AND ensuring a well-planned and predictible licensing consumption model. Although this lab showcases a few auth methods, secret engines..etc The concepts are univeral within Vault and can be extended to demonstrate other scenarios. Here are a few tips to consider:
+Understanding how entities, entity aliases and clients work in Vault is critical for both deploying a secure secret management solution AND ensuring a well-planned and predictable licensing consumption model. Although this lab showcases a few auth methods, secret engines, etc., the concepts are universal within Vault and can be extended to demonstrate other scenarios. Here are a few tips to consider:
 
-- Clients are unique applications, services, and/or users that authenticate to a HashiCorp Vault cluster. More details in this [What is a Vault Client](https://developer.hashicorp.com/hcp/docs/vault/client#authentication-methods-and-how-they-re-counted-in-vault) article. 
-- Entities and Clients are not one and the same. You can have many entities and zero clients. 
-- Clients are created upon successful API actions post-authentication ( UI login, retrieving secrets). They are counted once per billing period no matter how many times the client uses Vault. 
-- Entities can either be implicitly created by Vault when users/services successfully authenticate into Vault OR they can be explicitly pre-created via Vault API/Terraform provider..etc.
-- It's recommended to pre-create entities and entity aliases explicitly to ensure predictable and accurate client count. 
-- Entities and entity aliases are scoped to the Vault namespace. You can not associate entity aliases from different namespaces into an entity in local namespace.
-- If a client authenticates to Vault in a parent or root namespaces, it is considered the same client in all child namespaces. This is obvious as it is within the same logical isolation. Place that auth in the root namespace to be considered as 1 client in all namespaces. 
-- Entities can have 0 or more entity aliases. 
-- Entities can have only have 1 entity alias from the same auth *mount*
-- Entities can have any number of entity aliases from different auth mounts of the same *auth method*
-- Entity aliases need to be named appropriately based on the [following Auth Method/Name mapping](https://developer.hashicorp.com/hcp/docs/vault/client#authentication-methods-and-how-they-re-counted-in-vault)
-- Entities are global in a performance-replicated multi Vault Enterprise cluster deployments. Clients, however, are only local to the cluster. 
+- Clients are unique applications, services, and/or users that authenticate to a HashiCorp Vault cluster. More details in the [What is a Vault Client](https://developer.hashicorp.com/hcp/docs/vault/client#authentication-methods-and-how-they-re-counted-in-vault) article.
+- Entities and Clients are not one and the same. You can have many entities and zero clients.
+- Clients are created upon successful API actions post-authentication (UI login, retrieving secrets). They are counted once per billing period no matter how many times the client uses Vault.
+- Entities can either be implicitly created by Vault when users/services successfully authenticate into Vault, or they can be explicitly pre-created via Vault API/Terraform provider, etc.
+- It's recommended to pre-create entities and entity aliases explicitly to ensure predictable and accurate client count.
+- Entities and entity aliases are scoped to the Vault namespace. You cannot associate entity aliases from different namespaces into an entity in a local namespace.
+- If a client authenticates to Vault in a parent or root namespace, it is considered the same client in all child namespaces. Place auth in the root namespace to be considered as 1 client in all namespaces.
+- Entities can have 0 or more entity aliases.
+- Entities can only have 1 entity alias from the same auth *mount*.
+- Entities can have any number of entity aliases from different auth mounts of the same *auth method*.
+- Entity aliases need to be named appropriately based on the [following Auth Method/Name mapping](https://developer.hashicorp.com/hcp/docs/vault/client#authentication-methods-and-how-they-re-counted-in-vault).
+- Entities are global in a performance-replicated multi Vault Enterprise cluster deployment. Clients, however, are only local to the cluster.
 
 
 ### Teardown
@@ -687,14 +683,8 @@ $ kubectl delete -f app-b.yml -n red
 $ terraform destroy --auto-approve
 ```
 
-For brute-force style teardown, you can issue `kubectl delete ns blue red vault`, and in case you have a namespace stuck in the `Terminating` state you can issue this command to clear any k8s finalizers 
+For a brute-force teardown, you can issue `kubectl delete ns blue red vault`. If a namespace is stuck in the `Terminating` state, run this command to clear any k8s finalizers:
 
 ```
-NS=`kubectl get ns |grep Terminating | awk 'NR==1 {print $1}'` && kubectl get namespace "$NS" -o json | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NS/finalize -f - 
-
+NS=`kubectl get ns |grep Terminating | awk 'NR==1 {print $1}'` && kubectl get namespace "$NS" -o json | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NS/finalize -f -
 ```
-
-
-
-
-
