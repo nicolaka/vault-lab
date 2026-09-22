@@ -67,3 +67,66 @@ resource "vault_kv_secret_v2" "red_app_secret" {
 }
 
 
+# SPIFFE Secret Engine
+
+resource "vault_mount" "spiffe" {
+  depends_on  = [helm_release.vault]
+  namespace   = var.vault_namespace
+  path        = "spiffe"
+  type        = "spiffe"
+  description = "SPIFFE secrets engine for workload identity via JWT SVIDs"
+}
+
+resource "vault_spiffe_secret_backend_config" "spiffe" {
+  mount                       = vault_mount.spiffe.path
+  namespace                   = var.vault_namespace
+  trust_domain                = "example.org"
+  jwt_signing_algorithm       = "RS256"
+  jwt_oidc_compatibility_mode = false
+}
+
+resource "vault_spiffe_secret_backend_role" "app_a" {
+  namespace     = var.vault_namespace
+  mount         = vault_mount.spiffe.path
+  name          = "app-a"
+  template      = jsonencode({ sub = "spiffe://example.org/ns/blue/sa/app-a" })
+  ttl           = "1h"
+  use_jti_claim = true
+}
+
+resource "vault_spiffe_secret_backend_role" "app_b" {
+  mount         = vault_mount.spiffe.path
+  namespace     = var.vault_namespace
+  name          = "app-b"
+  template      = jsonencode({ sub = "spiffe://example.org/ns/red/sa/app-b" })
+  ttl           = "1h"
+  use_jti_claim = true
+}
+
+resource "vault_policy" "spiffe_app_a" {
+  namespace = var.vault_namespace
+  name      = "spiffe-app-a"
+  policy    = <<EOT
+path "spiffe/trust_bundle/web" {
+  capabilities = ["read"]
+}
+
+path "spiffe/role/app-a/mintjwt" {
+  capabilities = ["create", "update"]
+}
+EOT
+}
+
+resource "vault_policy" "spiffe_app_b" {
+  namespace = var.vault_namespace
+  name      = "spiffe-app-b"
+  policy    = <<EOT
+path "spiffe/trust_bundle/web" {
+  capabilities = ["read"]
+}
+
+path "spiffe/role/app-b/mintjwt" {
+  capabilities = ["create", "update"]
+}
+EOT
+}

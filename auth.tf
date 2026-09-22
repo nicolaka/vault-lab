@@ -159,3 +159,52 @@ resource "vault_kubernetes_auth_backend_role" "app_b" {
   token_policies                   = ["red"]
   audience                         = ""
 }
+
+
+# SPIFFE Auth Method
+# Enables JWT-SVID authentication for workloads that received an SVID from the SPIFFE secrets engine.
+# Authorization header passthrough is required for JWT-based SVIDs.
+
+resource "vault_auth_backend" "spiffe" {
+  namespace  = var.vault_namespace
+  type       = "spiffe"
+  path       = "auth-spiffe"
+  depends_on = [helm_release.vault]
+
+  tune {
+    passthrough_request_headers = ["Authorization"]
+  }
+}
+
+resource "vault_spiffe_auth_backend_config" "spiffe" {
+  namespace    = var.vault_namespace
+  mount        = vault_auth_backend.spiffe.path
+  #profile      = "https_web_bundle"
+  trust_domain = "example.org"
+  # Fetch the trust bundle from the local SPIFFE secrets engine
+  #profile = "https_web_bundle"
+  #endpoint_url   = "https://${data.kubernetes_service.vault.spec.0.cluster_ip}:8200/v1/${vault_mount.spiffe.path}/trust_bundle/web"
+  #defer_bundle_fetch  = true
+  
+  # For static bundle
+  bundle     = jsonencode(var.static_bundle)
+  profile = "static"
+
+}
+
+
+resource "vault_spiffe_auth_backend_role" "spiffe_role" {
+  mount        = vault_auth_backend.spiffe.path
+  name         = "app-a"
+  workload_id_patterns = ["/ns/blue/sa/app-a"]
+  token_ttl = 3600
+  token_max_ttl = 7200
+  token_policies = ["blue", "spiffe-app-a"]
+  token_explicit_max_ttl = 10800
+  token_num_uses = 1
+  token_period = 60
+  token_type = "service"
+  alias_metadata = { 
+  "spiffe" = "true" 
+  }
+}

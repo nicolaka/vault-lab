@@ -8,7 +8,7 @@ variable kubernetes_endpoint {
 variable "vault_version" {
   type = string
   description = "Vault Version"
-  default = "latest"
+  default = "1.19-ent"
 }
 
 variable "vault_license" {
@@ -61,6 +61,15 @@ variable "prom_version" {
   type = string
   description = "Prom Version"
   default = "68.4.0"
+}
+
+# JWKS object from GET /v1/spiffe/trust_bundle/web. Required for SPIFFE
+# auth (profile = static). Refresh after the secrets engine rotates keys.
+# This is a workaround I used as I was having issues with fetching the trust bundle from the secrets engine due to the HTTP-only listener.
+variable "static_bundle" {
+  type        = any
+  description = "SPIFFE trust bundle (JWKS) copied from the secrets engine into auth-spiffe"
+  default     = {}
 }
 
 
